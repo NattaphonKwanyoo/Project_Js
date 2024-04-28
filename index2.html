@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>แนะนำตัวเอง</h1>
+    <p id="Fname">ชื่อ....</p>
+    <p id="Sname">นามสกุล</p>
+    <p id="age">อายุ...</p>
+
+    <div id="test">
+
+    </div>
+
+
+    <script>
+        var address = document.createElement("p");
+        address.innerText = "ไอกวงหัวควย";
+
+        document.getElementById("test").appendChild(address);
+
+        for(n=1;n<=10;n++){
+        var inputName = document.createElement("input");
+        inputName.setAttribute('type','text');
+        inputName.setAttribute('name','number1');
+        inputName.setAttribute('id','txt');
+
+        document.getElementById("test").appendChild(inputName);
+        }
+
+        
+
+
+
+
+        // myElement1.setAttribute('type', 'text');
+        // myElement1.setAttribute('name', 'txtSiteName[]');
+        // myElement1.setAttribute('id',"txt"+num);
+    </script>
+</body>
+</html>

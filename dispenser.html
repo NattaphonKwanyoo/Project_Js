@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .ShowInput{
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+    .showbtn{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        padding: 10px;
+        /* margin-right: 80%; */
+        width: 20%;
+    }
+    #btnAdd{
+        margin-right: 15px;
+    }
+    hr{
+        border: 5px seagreen dashed;
+    }
+    th{
+        border: 5px seagreen solid;
+    }
+    table{
+        padding-left: 50px;
+    }
+</style>
+<body>
+    <h1>ร้านอรูมิไร่ ขายปลีก</h1>
+    <p id="inputName">คุณลูกค้าชื่อ : <input type="text" name="" id=""></p>
+    <p id="inputM">คุณเป็นสมาชิกใช่หรือไม่ : <input type="radio" name="Member" id="Member1" value = 'yes' onclick="myFunction('show')"> ใช่ 
+        <input type="radio" name="Member" id="Member2" value = 'no' onclick="myFunction('show')"> ไม่ใช่ 
+        <br> <p id = 'idMemder' style="display:none;">เลขสมาชิก <input type="text" name="" id=""></p> </p>
+    <div class="showbtn">
+    <input type="button" value="เพิ่มรายการสินค้า" style="display:none;" onclick="addMenu()" id="btnAdd">
+    <input type="button" value="คำนวณรายการสินค้า" style="display:none;" id="btnSum" onclick="summit()" ></div>
+    <div class="ShowInput">
+        <div id="show" style="display:none;">
+            <h1>กรอกรรายการสินค้า</h1>
+            <div id="inputData1">
+                <p id= 'pNameMeunu1'><label id="LMunu1">ชื่อสินค้าชิ้นที่ 1 : </label><input type="text" name="NameMeunu[]" id="inputNameMeunu1" onchange="showValue('td11','inputNameMeunu',1)"></p>
+                <p id= 'pPrice1'><label id="LPrice1">ราคาสินค้าต่อหน่วย : </label><input type="text" name="price[]" id="price1" onchange="showValue('td13','price',1)"></p>
+                <p id= 'Unit1'><label id="LUnit1">จำนวนสินค้า :</label> <input type="text" name="unit[]" id="countMenu1" onchange="showValue('td12','countMenu',1)"></p>
+                <hr>
+            </div>
+           
+        </div>
+
+        <div id="ShowData" >
+            <h1>รายการสินค้า</h1>
+            <p>ลูกค้าชื่อ : </p>
+            <p>รหัสสมาชิก : </p>
+            <table id = 'tableData'>
+                <tr>
+                    <th style="width: 500px;">รายการสินค้า</th>
+                    <th style="width: 100px;">จำนวน</th>
+                    <th style="width: 100px;">ราคา / หน่วย</th>
+                </tr>
+                <tr id="trShow1">
+                    <td id="td11"></td>
+                    <td id="td12"></td>
+                    <td id="td13"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        function myFunction(id) {
+           if(document.getElementsByName('Member')[0].checked){
+            console.log(document.getElementsByName('Member')[0].value);
+            var n = document.getElementById('idMemder');
+            n.style.display = "block";
+           }else{
+            console.log(document.getElementsByName('Member')[1].value);
+            var n = document.getElementById('idMemder');
+            n.style.display = "none";
+           }
+            var x = document.getElementById(id);
+            x.style.display = "block";
+            document.getElementById('btnAdd').style.display = "block";
+            document.getElementById('btnSum').style.display = "block";
+        }
+
+        var num = 1 ;
+        var numtr = 1;
+        function addMenu(){
+            num++;
+
+            //เช็ดข้อมูล
+            var divAdd = document.createElement("div");
+            divAdd.setAttribute('id','inputData'+num);
+
+            var p1 = document.createElement('p');
+            p1.setAttribute('id','pNameMeunu'+num);
+
+            var inputName = document.createElement('input');
+            inputName.setAttribute('id','inputNameMeunu'+num);
+            inputName.setAttribute('type','text');
+            inputName.setAttribute('name','NameMeunu[]');
+            inputName.setAttribute('onchange','showValue("td'+num+'1","inputNameMeunu",'+num+')');
+            //onchange="showValue('td11','inputNameMeunu',1)"
+
+            var l1=document.createElement('Label');
+            l1.setAttribute("id",'LMunu'+num);
+            l1.innerText = 'ชื่อสินค้าชิ้นที่ '+num+" : " ;
+       
+            var p2 = document.createElement('p');
+            p2.setAttribute('id','pPrice'+num);
+
+            var l2=document.createElement('Label');
+            l2.setAttribute("id",'LPrice'+num);
+            l2.innerText = "ราคาสินค้าต่อหน่วย  : " ;
+
+            var inputPrice = document.createElement('input');
+            inputPrice.setAttribute('id','price'+num);
+            inputPrice.setAttribute('type','text');
+            inputPrice.setAttribute('name','price[]');
+            inputPrice.setAttribute('onchange','showValue("td'+num+'2","price",'+num+')');
+
+            var p3 = document.createElement('p');
+            p3.setAttribute('id','Unit'+num);
+
+            var l3=document.createElement('Label');
+            l3.setAttribute("id",'LUnit'+num);
+            l3.innerText = "จำนวนสินค้า  : " ;
+
+            var inputUnit = document.createElement('input');
+            inputUnit.setAttribute('id','countMenu'+num);
+            inputUnit.setAttribute('type','text');
+            inputUnit.setAttribute('name','unit[]');
+            inputUnit.setAttribute('onchange','showValue("td'+num+'3","countMenu",'+num+')');
+
+            
+            //เพิ่มข้อมุล
+            document.getElementById('show').appendChild(divAdd);
+
+            document.getElementById('inputData'+num).appendChild(p1);
+            document.getElementById('pNameMeunu'+num).appendChild(l1);
+            document.getElementById('pNameMeunu'+num).appendChild(inputName);
+            
+            document.getElementById('inputData'+num).appendChild(p2);
+            document.getElementById('pPrice'+num).appendChild(l2);
+            document.getElementById('pPrice'+num).appendChild(inputPrice);
+
+            document.getElementById('inputData'+num).appendChild(p3);
+            document.getElementById('Unit'+num).appendChild(l3);
+            document.getElementById('Unit'+num).appendChild(inputUnit);
+            
+            numtr++;
+            document.getElementById('inputData'+num).appendChild(document.createElement('hr'));
+            var trShow = document.createElement('tr');
+            trShow.setAttribute('id','trShow'+numtr);
+            document.getElementById('tableData').appendChild(trShow);
+
+            var td1 = document.createElement('td');
+            td1.setAttribute('id','td'+numtr+'1');
+            document.getElementById('trShow'+numtr).appendChild(td1);
+
+            var td2 = document.createElement('td');
+            td2.setAttribute('id','td'+numtr+'2');
+            document.getElementById('trShow'+numtr).appendChild(td2);
+
+            var td3 = document.createElement('td');
+            td3.setAttribute('id','td'+numtr+'3');
+            document.getElementById('trShow'+numtr).appendChild(td3);
+            
+        }
+
+        function showValue(where,where2,count){
+                document.getElementById(where).innerText = document.getElementById(where2+count).value;
+        }
+
+        var itemMenu = [];
+        var itemPrice = [];
+        var itemUnit = [];
+        function summit(){
+            var n = document.getElementsByName('NameMeunu[]')
+            for(var x=0;x<n.length;x++){
+                itemMenu.push(n[x].value)
+            }
+
+            n = document.getElementsByName('price[]')
+            for(var x=0;x<n.length;x++){
+                itemPrice.push(n[x].value)
+            }
+
+            n = document.getElementsByName('unit[]')
+            for(var x=0;x<n.length;x++){
+                itemUnit.push(n[x].value)
+            }
+
+            var sumPrice = [];
+            for(vax = 0;x<sumPrice.length;x++){
+                
+            }
+
+
+            console.log(itemMenu);
+        }
+       
+        
+        
+
+    </script>
+</body>
+</html>
